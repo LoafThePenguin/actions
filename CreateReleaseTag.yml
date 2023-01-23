@@ -1,0 +1,21 @@
+name: Create Tag
+on:
+      workflow_call:
+
+jobs: 
+    Create-Tag:
+        name: Create Tag
+        runs-on: windows-latest
+        steps:
+            - run: echo "previous_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo '')" >> $GITHUB_ENV
+            - name: Version
+              id: version
+              uses: /Version.yml
+            - name: Create Tag
+              id: create_tag
+              uses: jaywcjlove/create-tag-action@main
+              if: env.previous_tag
+              with:
+                token: ${{ secrets.GITHUB_TOKEN }}
+                release: true
+                version: ${{ version.outputs.version }}
