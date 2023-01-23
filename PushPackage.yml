@@ -1,0 +1,17 @@
+name: Push Package
+on:
+      workflow_call:
+        inputs:
+            project:
+                description: Project will check
+                required: true
+                type: string
+jobs: 
+    Package:
+        name: Package
+        runs-on: windows-latest
+        steps:
+            - name: Pack Package
+              run: dotnet pack src/${{ inputs.project }} -c Release
+            - name: Push Package
+              run: dotnet nuget push "**/${{ inputs.project }}/artifacts/Release/nupkg/*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/LoafThePenguin/index.json
