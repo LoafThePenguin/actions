@@ -3,16 +3,16 @@ on:
       workflow_call:
 
 jobs: 
-    Version:
-        name: Version
-        runs-on: windows-latest
-        outputs:
-          version: ${{ steps.nbgv.ouutputs.SemVer2 }}
-        steps:
-            - name: Version
-              uses: dotnet/nbgv@master
-              id: nbgv
-              with:
-                setAllVars: true
-                setCommonVars: true
-            - run: "echo 'SemVer2: ${{ steps.nbgv.outputs.SemVer2 }}'"
+  Version:
+    name: Version
+    runs-on: windows-latest
+    outputs:
+      version: ${{ steps.nbgv.ouutputs.SemVer2 }}
+    steps:
+      - name: Version
+        uses: dotnet/nbgv@master
+        id: nbgv
+        with:
+          setAllVars: true
+          setCommonVars: true
+      - run: "echo 'SemVer2: ${{ steps.nbgv.outputs.SemVer2 }}'"
