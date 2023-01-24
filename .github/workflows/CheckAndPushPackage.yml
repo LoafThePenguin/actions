@@ -1,6 +1,6 @@
 name: Check and push a package
 on:
-      workflow_call:
+    workflow_call:
         inputs:
             project:
                 description: Project will check
