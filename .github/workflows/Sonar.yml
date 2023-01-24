@@ -5,11 +5,9 @@ on:
       project:
         description: Project will check
         required: true
-        type: string
       key:
         description: Sonar Key
         required: true
-        type: string
     secrets:
       SONAR_TOKEN: 
         required: true
