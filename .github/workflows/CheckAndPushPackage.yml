@@ -1,31 +1,31 @@
 name: Check and push a package
 on:
-    workflow_call:
-        inputs:
-            project:
-                description: Project will check
-                required: true
-                type: string
-            key:
-                description: Sonar Key
-                required: true
-                type: string
-        secrets:
-            SONAR_TOKEN: 
-                required: true
+  workflow_call:
+    inputs:
+      project:
+        description: Project will check
+        required: true
+        type: string
+      key:
+        description: Sonar Key
+        required: true
+        type: string
+    secrets:
+      SONAR_TOKEN: 
+        required: true
 jobs: 
-    Sonar:
-        uses: LoafThePenguin/actions/.github/workflows/Sonar.yml@main
-        with:
-            prioject: ${{ inputs.project }}
-            key: ${{ inputs.project }}
-        secrets:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    PushPackage:
-        needs: [Sonar]
-        uses: LoafThePenguin/actions/.github/workflows/PushPackage.yml@main
-        with:
-            project: ${{ inputs.project }}
-    Tag: 
-        needs: [PushPackage]
-        uses: LoafThePenguin/actions/.github/workflows/CreateReleaseTag.yml@main
+  Sonar:
+    uses: LoafThePenguin/actions/.github/workflows/Sonar.yml@main
+    with:
+      prioject: ${{ inputs.project }}
+      key: ${{ inputs.project }}
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  PushPackage:
+    needs: [Sonar]
+    uses: LoafThePenguin/actions/.github/workflows/PushPackage.yml@main
+    with:
+      project: ${{ inputs.project }}
+  Tag: 
+    needs: [PushPackage]
+    uses: LoafThePenguin/actions/.github/workflows/CreateReleaseTag.yml@main
