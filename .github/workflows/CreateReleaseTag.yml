@@ -3,14 +3,15 @@ on:
       workflow_call:
 
 jobs: 
+    Version:
+      id: version
+      uses: LoafThePenguin/actions/.github/workflows/Version.yml@main 
     Create-Tag:
         name: Create Tag
         runs-on: windows-latest
+        needs: [Version]
         steps:
-            - run: echo "previous_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo '')" >> $GITHUB_ENV
-            - name: Version
-              id: version
-              uses: /Version.yml
+            - run: echo "previous_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo '')" >> $GITHUB_ENV              
             - name: Create Tag
               id: create_tag
               uses: jaywcjlove/create-tag-action@main
