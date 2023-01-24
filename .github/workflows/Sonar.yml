@@ -15,7 +15,7 @@ on:
         required: true
 jobs: 
   SetupNet:
-    uses: LoafThePenguin/actions/.github/workflows/SetupDotNet.yml@main/.yml
+    uses: LoafThePenguin/actions/.github/workflows/SetupDotNet.yml@main
   Sonar:
     name: Sonar
     runs-on: windows-latest
