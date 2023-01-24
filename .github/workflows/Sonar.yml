@@ -14,12 +14,13 @@ on:
             SONAR_TOKEN: 
                 required: true
 jobs: 
+    SetupNet:
+      uses: LoafThePenguin/actions/.github/workflows/SetupDotNet.yml@main
     Sonar:
         name: Sonar
         runs-on: windows-latest
+        needs: [SetupNet]
         steps:
-          - name: Set up .Net
-            uses: /SetupDotNet.yml
           - name: Set up JDK 11
             uses: actions/setup-java@v1
             with:

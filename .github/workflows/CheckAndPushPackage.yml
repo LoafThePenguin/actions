@@ -14,20 +14,18 @@ on:
             SONAR_TOKEN: 
                 required: true
 jobs: 
-    Package:
-        name: Check and push a package
-        runs-on: windows-latest
-        steps:
-            - name: Sonar Check
-              uses: /Sonar.yml
-              with:
-                  prioject: ${{ inputs.project }}
-                  key: ${{ inputs.project }}
-              secrets:
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-            - name: Push Package
-              uses: /PushPackage.yml
-              with:
-                  project: ${{ inputs.project }}
-            - name: Create Release Tag
-              uses: /CreateReleaseTag.yml
+    Sonar:
+        uses: LoafThePenguin/actions/.github/workflows/Sonar.yml@main
+        with:
+            prioject: ${{ inputs.project }}
+            key: ${{ inputs.project }}
+        secrets:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    PushPackage:
+        needs: [Sonar]
+        uses: LoafThePenguin/actions/.github/workflows/PushPackage.yml@main
+        with:
+            project: ${{ inputs.project }}
+    Tag: 
+        needs: [PushPackage]
+        uses: LoafThePenguin/actions/.github/workflows/CreateReleaseTag.yml@main
