@@ -3,7 +3,6 @@ on:
   workflow_call:
 jobs: 
   Version:
-    id: version
     uses: LoafThePenguin/actions/.github/workflows/Version.yml@main 
   Create-Tag:
     name: Create Tag
