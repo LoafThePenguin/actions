@@ -18,7 +18,7 @@ jobs:
     uses: LoafThePenguin/actions/.github/workflows/Sonar.yml@main
     with:
       prioject: ${{ inputs.project }}
-      key: ${{ inputs.project }}
+      key: ${{ inputs.key }}
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   PushPackage:
