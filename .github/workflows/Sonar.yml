@@ -1,18 +1,6 @@
 name: Sonar
 on:
   workflow_call:
-    inputs:
-      project:
-        description: Project will check
-        required: true
-        type: string
-      key:
-        description: Sonar Key
-        required: true
-        type: string
-    secrets:
-      SONAR_TOKEN: 
-        required: true
 jobs: 
   SetupNet:
     uses: LoafThePenguin/actions/.github/workflows/SetupDotNet.yml@main
@@ -54,6 +42,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:${{ inputs.key }} /o:"loafthepenguin" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build src/${{ inputs.project }}/${{ inputs.project }}.sln
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:${{ secrets.KEY }} /o:"loafthepenguin" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url="https://sonarcloud.io"
+          dotnet build src/${{ secrets.PROJECT }}/${{ secrets.PROJECT }}.sln
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
