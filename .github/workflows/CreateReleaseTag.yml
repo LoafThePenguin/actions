@@ -18,4 +18,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release: true
-          version: ${{ jobs.version.outputs.version }}
+          version: ${{ needs.Version.outputs.version }}
