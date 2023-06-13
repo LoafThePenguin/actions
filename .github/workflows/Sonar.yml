@@ -2,27 +2,30 @@ name: Sonar
 on:
   workflow_call:
 jobs: 
-  SetupNet:
-    uses: LoafThePenguin/actions/.github/workflows/SetupDotNet.yml@main
   Sonar:
     name: Sonar
     runs-on: windows-latest
-    needs: [SetupNet]
     steps:
+      - name: Setup .Net
+        uses: LoafThePenguin/actions/.github/workflows/SetupDotNet.yml@main
+
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
           java-version: 1.11
+
       - name: Checkout
         uses: actions/checkout@v3
         with: 
           fetch-depth: 0
+
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
           path: .\sonar\cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+
       - name: Cache SonarCloud scanner
         id: cache-sonar-scanner
         uses: actions/cache@v3
@@ -30,12 +33,14 @@ jobs:
           path: .\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
+
       - name: Install SonarCloud scanner
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
         shell: powershell
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any

@@ -1,7 +1,6 @@
 name: Version
 on:
       workflow_call:
-
 jobs: 
   Version:
     name: Version
