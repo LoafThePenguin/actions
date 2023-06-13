@@ -1,12 +1,21 @@
 name: Check and push a package
 on:
   workflow_call:
+    inputs: 
+      PROJECT:
+        description: Project Name
+        required: true
+        type: string
 jobs: 
   Sonar:
     uses: LoafThePenguin/actions/.github/workflows/Sonar.yml@main
+    with:
+      PROJECT: ${{ inputs.PROJECT }}
   PushPackage:
     needs: [Sonar]
     uses: LoafThePenguin/actions/.github/workflows/PushPackage.yml@main
+    with:
+      PROJECT: ${{ inputs.PROJECT }}
   Tag: 
     needs: [PushPackage]
     uses: LoafThePenguin/actions/.github/workflows/CreateReleaseTag.yml@main
