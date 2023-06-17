@@ -6,7 +6,7 @@ jobs:
     name: Version
     runs-on: windows-latest
     outputs:
-      version: ${{ steps.nbgv.ouutputs.SemVer2 }}
+      version: ${{ steps.nbgv.outputs.SemVer2 }}
     steps:
       - name: Version
         uses: dotnet/nbgv@master
