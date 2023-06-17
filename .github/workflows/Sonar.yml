@@ -6,6 +6,14 @@ on:
         description: Project Name
         required: true
         type: string
+      SONAR_TOKEN:
+        description: Sonar Token
+        required: true
+        type: string
+      SONAR_KEY:
+        description: Sonar Key
+        required: true
+        type: string
 jobs: 
   SetupDotNet:
     uses: LoafThePenguin/actions/.github/workflows/SetupDotNet.yml@main
@@ -49,9 +57,8 @@ jobs:
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:${{ secrets.SONAR_KEY }} /o:"loafthepenguin" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url="https://sonarcloud.io"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:${{ inputs.SONAR_KEY }} /o:"loafthepenguin" /d:sonar.login=${{ inputs.SONAR_TOKEN }} /d:sonar.host.url="https://sonarcloud.io"
           dotnet build src/${{ inputs.PROJECT }}/${{ inputs.PROJECT }}.csproj
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
