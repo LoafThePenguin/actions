@@ -6,21 +6,11 @@ on:
         description: Project Name
         required: true
         type: string
-      SONAR_TOKEN:
-        description: Sonar Token
-        required: true
-        type: string
-      SONAR_KEY:
-        description: Sonar Key
-        required: true
-        type: string
 jobs: 
   Sonar:
     uses: LoafThePenguin/actions/.github/workflows/Sonar.yml@main
     with:
       PROJECT: ${{ inputs.PROJECT }}
-      SONAR-TOKEN: ${{ inputs.SONAR_TOKEN }}
-      SONAR-KEY: ${{ inputs.SONAR_KEY }}
   PushPackage:
     needs: [Sonar]
     uses: LoafThePenguin/actions/.github/workflows/PushPackage.yml@main
